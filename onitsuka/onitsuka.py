@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect
+from model import User
 
 app = Flask(__name__)
 
@@ -17,7 +18,15 @@ def user_login():
 def user_regist():
     if request.method == 'POST':
         print(request.form)
-        return redirect(url_for("user_login"))
+        user = User()
+        user.name = request.form["user_name"]
+        user.pwd = request.form["user_pwd"]
+        user.email = request.form['user_email']
+        user.age = request.form['user_age']
+        user.birthday = request.form['user_birthday']
+        user.face = request.form['user_face']
+        print(user.name)
+        return redirect(url_for("user_login", username = user.name))
     return render_template('user_regist.html')
 
 
